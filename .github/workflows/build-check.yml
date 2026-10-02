@@ -1,0 +1,24 @@
+name: ビルドチェック
+
+# コードを変えたときに、型チェックと Next.js のビルドが通るかを自動で確かめる
+on:
+  push:
+    paths-ignore:
+      - "README.md"
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: ライブラリを入れる
+        run: npm install --no-audit --no-fund
+      - name: 型チェック
+        run: npm run typecheck
+      - name: ビルド
+        run: npm run build

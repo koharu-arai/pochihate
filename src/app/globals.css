@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+/* 色はここで一元管理。ライト → ダーク(OS設定に追従)の順。 */
+:root {
+  --background: #eef1f4;
+  --foreground: #18202b;
+  --card: #ffffff;
+  --card-foreground: #18202b;
+  --muted: #e6eaef;
+  --muted-foreground: #5e6878;
+  --border: #d5dbe3;
+  --primary: #1f4fd1;
+  --primary-foreground: #ffffff;
+  --primary-soft: #e3eafb;
+  --tag: #f2c14e; /* 値札の黄色 */
+  --tag-foreground: #2a2109;
+  --good: #18865a;
+  --warn: #b7791f;
+  --bad: #c2413a;
+  --good-soft: #e2f3ea;
+  --warn-soft: #fbf0dc;
+  --bad-soft: #f9e3e1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #12161c;
+    --foreground: #e9edf2;
+    --card: #1b2129;
+    --card-foreground: #e9edf2;
+    --muted: #232a34;
+    --muted-foreground: #9aa4b2;
+    --border: #2e3642;
+    --primary: #7fa2ff;
+    --primary-foreground: #0e1424;
+    --primary-soft: #1f2a44;
+    --tag: #e8b53c;
+    --tag-foreground: #231a05;
+    --good: #4cc28e;
+    --warn: #e3a84a;
+    --bad: #f07a72;
+    --good-soft: #163026;
+    --warn-soft: #33281a;
+    --bad-soft: #3a1f1e;
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-tag: var(--tag);
+  --color-tag-foreground: var(--tag-foreground);
+  --color-good: var(--good);
+  --color-warn: var(--warn);
+  --color-bad: var(--bad);
+  --color-good-soft: var(--good-soft);
+  --color-warn-soft: var(--warn-soft);
+  --color-bad-soft: var(--bad-soft);
+
+  --font-sans: "Zen Kaku Gothic New", "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", system-ui, sans-serif;
+  --font-display: "Dela Gothic One", "Zen Kaku Gothic New", "Hiragino Sans", sans-serif;
+  --font-mono: "M PLUS 1 Code", ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-tap-highlight-color: transparent;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+/* 値札：左が尖って穴が空いた形 */
+.price-tag {
+  clip-path: polygon(24px 0, 100% 0, 100% 100%, 24px 100%, 0 50%);
+}
+.price-tag::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin-top: -4.5px;
+  border-radius: 50%;
+  background: var(--card);
+}
+.mini-tag {
+  clip-path: polygon(28% 0, 100% 0, 100% 100%, 28% 100%, 0 50%);
+}
+
+/* レシート：下端がギザギザ */
+.receipt {
+  -webkit-mask: radial-gradient(circle 6px at 50% 100%, transparent 98%, #000) 0 0 / 14px 100% repeat-x;
+  mask: radial-gradient(circle 6px at 50% 100%, transparent 98%, #000) 0 0 / 14px 100% repeat-x;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
